@@ -1,10 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function App() {
+
+
+  const [helloWorld, setHelloWorld] = useState('');
+
+  const ping_hello_world = async () => {
+    await axios.get(`http://localhost:4200/hello`)
+      .then(res => {
+        const data = res.data;
+        setHelloWorld(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  };
+
+  // call hello world endpoint
+  useEffect(() => {
+    ping_hello_world();
+    }, []);
+
+
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Welcome!</Text>
+      <Text>{helloWorld}</Text>
       <StatusBar style="auto" />
     </View>
   );
