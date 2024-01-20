@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ApiManager } from './src/ApiManager'
 // environment variables
 import { API_URL } from '@env';
 
@@ -9,16 +10,23 @@ export default function App() {
 
   const [helloWorld, setHelloWorld] = useState('');
 
+  // const ping_hello_world = async () => {
+  //   await axios.get(API_URL + '/hello')
+  //     .then(res => {
+  //       const data = res.data;
+  //       setHelloWorld(data);
+  //     })
+  //     .catch(err => {
+  //       console.log("Error: ", err);
+  //       console.log(API_URL);
+  //     });
+
+  // };
+
   const ping_hello_world = async () => {
-    await axios.get(API_URL + '/hello')
-      .then(res => {
-        const data = res.data;
-        setHelloWorld(data);
-      })
-      .catch(err => {
-        console.log("Error: ", err);
-        console.log(API_URL);
-      });
+    let response = await ApiManager.helloWorld();
+
+    console.log(response)
 
   };
 
