@@ -6,7 +6,7 @@ const BASE_URL = API_URL
 
 class ApiManager{
     static helloWorld = () => {
-        const url = BASE_URL + ENDPOINTS.HELLO_WORLD;
+        const url = BASE_URL + ENDPOINTS.HELLO_WORLD();
         return ApiMethods.get(url);
     }
     

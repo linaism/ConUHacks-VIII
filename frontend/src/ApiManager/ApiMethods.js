@@ -1,7 +1,6 @@
-
+import axios from 'axios';
 
 const getHeaders = () => {
-
   return {
     'Content-Type': 'application/json',
   };
@@ -9,12 +8,19 @@ const getHeaders = () => {
 
 class ApiMethods {
   static apiRequest(method, url, body = {}) {
-    return new Promise((resolve, reject) => {
-      fetch(url, { method, body: JSON.stringify(body), headers: getHeaders() })
-        .then(res => res.json())
-        .then(resolve)
-        .catch(reject);
-    });
+    const options = {
+      method: method,
+      headers: getHeaders(),
+      url: url,
+    };
+
+    if (method !== 'GET' && method !== 'DELETE') {
+      options.data = body;
+    }
+
+    return axios(options)
+      .then(response => response.data)
+      .catch(error => Promise.reject(error));
   }
 
   static get(url) {
