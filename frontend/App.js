@@ -5,6 +5,9 @@ import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapComponent from './components/foodbanks/MapComponent';
+import ApiManager from './src/ApiManager/ApiManager'
+// environment variables
+import { API_URL } from '@env';
 
 function HomeScreen() {
   return (
@@ -28,15 +31,27 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [helloWorld, setHelloWorld] = useState('');
 
+  // const ping_hello_world = async () => {
+  //   await axios.get(API_URL + '/hello')
+  //     .then(res => {
+  //       const data = res.data;
+  //       setHelloWorld(data);
+  //     })
+  //     .catch(err => {
+  //       console.log("Error: ", err);
+  //       console.log(API_URL);
+  //     });
+
+  // };
+
   const ping_hello_world = async () => {
-    await axios.get(`http://localhost:4200/hello`)
-      .then(res => {
-        const data = res.data;
-        setHelloWorld(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+    try {
+      let response = await ApiManager.helloWorld();
+      console.log(response);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
 
   };
 
