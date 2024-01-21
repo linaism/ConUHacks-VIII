@@ -24,4 +24,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 CMD exec gunicorn \
     --bind :$PORT \
     --timeout 0 \
-    main:app
+    __init__:app
