@@ -1,16 +1,17 @@
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
-import psycopg2
 from dotenv import load_dotenv
 import os
 from supabase import create_client, Client
+from backend.Blueprints.modelBlueprint import bp as modelsBP, preload_model
 
-
-
-def create_app(test_config=None):
-    app = Flask(__name__)
-
+def create_app():
     load_dotenv()
+    preload_model()
+    
+    app = Flask(__name__)
+    app.register_blueprint(modelsBP)
+
 
     # PostgreSQL connection parameters
     url: str = os.environ.get("SUPABASE_URL")
